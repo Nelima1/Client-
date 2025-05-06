@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exam Entry Status - Nairobi City County</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+    }
+    .portal-container {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    .portal-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .portal-header .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #0078D4;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 20px 0 10px;
+      color: #333;
+    }
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .info-table td {
+      padding: 8px 0;
+      font-size: 15px;
+      color: #444;
+    }
+    .info-table td:first-child {
+      font-weight: bold;
+      color: #222;
+      width: 40%;
+    }
+    .status-denied {
+      color: #d8000c;
+      background-color: #ffd2d2;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 15px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .late-fee {
+      text-align: center;
+      color: #555;
+      font-size: 15px;
+      margin-top: 10px;
+    }
+    .pay-btn {
+      display: block;
+      margin: 15px auto 0;
+      padding: 12px 20px;
+      font-size: 15px;
+      background-color: #0078D4;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .pay-btn:hover {
+      background-color: #005fa3;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #0078D4;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 15px auto 10px;
+      display: none;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 350px;
+      text-align: center;
+    }
+    .modal-content h3 {
+      color: #0078D4;
+      margin-bottom: 15px;
+    }
+    .modal-content p {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    @media screen and (max-width: 480px) {
+      .portal-container {
+        padding: 20px;
+      }
+      .portal-header .logo {
+        font-size: 20px;
+      }
+      .section-title {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="portal-container">
+    <div class="portal-header">
+      <div class="logo">NAIROBI CITY COUNTY</div>
+      <div class="section-title">Exam Payment Details</div>
+    </div>
+
+    <table class="info-table">
+      <tr>
+        <td>Student Name:</td>
+        <td>Abednego Muhuyi</td>
+      </tr>
+      <tr>
+        <td>ID Number:</td>
+        <td>340809828</td>
+      </tr>
+      <tr>
+        <td>Phone Number:</td>
+        <td>0743053818</td>
+      </tr>
+      <tr>
+        <td>Amount Paid:</td>
+        <td>KES 450</td>
+      </tr>
+      <tr>
+        <td>Payment Date:</td>
+        <td>3rd May 2025</td>
+      </tr>
+      <tr>
+        <td>Payment Time:</td>
+        <td>16:50</td>
+      </tr>
+    </table>
+
+    <div class="status-denied">
+      Exam Entry Denied: Payment was received after the deadline.
+    </div>
+    <div class="late-fee">
+      Late fee for the next exam slot: <strong>KES 300</strong>
+    </div>
+    <button class="pay-btn" onclick="payLateFee()">Pay Late Fee Now</button>
+    <div class="spinner" id="spinner"></div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="modal" id="paymentModal">
+    <div class="modal-content">
+      <h3>How to Pay</h3>
+      <p>Go to <strong>Lipa na M-Pesa</strong></p>
+      <p>Select <strong>Buy Goods and Services</strong></p>
+      <p>Enter Till Number: <strong>1234</strong></p>
+      <p>Enter Amount: <strong>KES 300</strong></p>
+      <p>Use your primary number: <strong>0743053818</strong></p>
+    </div>
+  </div>
+
+  <script>
+    const spinner = document.getElementById('spinner');
+    const modal = document.getElementById('paymentModal');
+
+    function payLateFee() {
+      spinner.style.display = 'block';
+      setTimeout(() => {
+        spinner.style.display = 'none';
+        modal.style.display = 'flex';
+      }, 1000);
+    }
+
+    // Close modal on outside click
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
